@@ -10,3 +10,6 @@ Thumbs.db
 # Editors
 .vscode/
 .idea/
+
+# Local-only PR description drafts (see the pr-description skill)
+.code-reviews/
