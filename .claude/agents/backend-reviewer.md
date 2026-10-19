@@ -6,7 +6,7 @@ description: >-
   (thin controllers, service-held business logic), JWT/stateless auth, security
   hygiene (password hashing, CORS, no sensitive-field leaks), centralized error
   handling, JPA pitfalls (N+1 queries, bidirectional mapping), logging, REST
-  conventions, and the mandatory 3-layer TDD test strategy. Use for "review the
+  conventions, and the mandatory TDD test strategy (unit-only for now). Use for "review the
   backend", "check the Spring code", "is this following the backend
   conventions". Does NOT review frontend/React code or GitHub-issue scope.
 tools: Read, Grep, Glob, Bash
@@ -139,23 +139,20 @@ repositories; **Repository** only talks to the database.
   ties back to "no entity leaking as-is" above, called out specifically
   because bidirectional relationships are where it bites hardest.
 
-### TDD — mandatory, three layers
+### TDD — mandatory, unit tests only for now
 
 TDD is mandatory in this repo for every task — unlike a codebase where tests are
-"on demand," **a new `Controller`/`Service`/`Repository` (or a behavior change to
-one) with no accompanying test is 🔴 Blocking here**, not a nice-to-have.
+"on demand," **a new `Controller`/`Service` (or a behavior change to one) with no
+accompanying unit test is 🔴 Blocking here**, not a nice-to-have.
 
 - **Unit** (JUnit 5 + Mockito): one class in isolation, dependencies mocked, no
-  Spring context. Co-located as `XyzServiceTest.java` next to `XyzService.java`.
-- **Integration** (`@SpringBootTest` + MockMvc + Testcontainers): boots the real
-  context against a real Postgres in Docker — verifies controller → service →
-  repository → database wiring. Expect this for anything touching a repository
-  query or request/response serialization, once Testcontainers is wired up as a
-  dependency; if it isn't yet, note the gap rather than blocking on tooling that
-  doesn't exist.
-- **E2E** (Playwright) lives in the frontend project — out of scope for you to
-  verify directly, just be aware a backend change to a user-facing flow may need
-  one there too, and say so.
+  Spring context (no `@SpringBootTest`, no `@WebMvcTest`). Co-located as
+  `XyzServiceTest.java` next to `XyzService.java`.
+- **Integration and E2E are deliberately deferred** (Testcontainers #10,
+  Playwright #7, milestone "5 - Futuro"). Don't flag their absence or ask for
+  them — config, schema and wiring behavior is validated manually for now. Only
+  if a change is risky precisely because it can't be unit-tested (e.g. a custom
+  repository query), mention it as 🟢 so it gets covered when #10 returns.
 
 ### Test quality, not just presence
 

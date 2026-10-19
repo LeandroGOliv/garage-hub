@@ -25,7 +25,7 @@ you (the primary assistant) are the one that fans out via the `Agent` tool.
 
 | Sub-agent                          | Owns                                                                                                                                              |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `backend-reviewer`                  | Java/Spring: layering, package-by-feature, JWT/security hygiene, centralized error handling, JPA pitfalls, logging, REST conventions, the mandatory 3-layer TDD |
+| `backend-reviewer`                  | Java/Spring: layering, package-by-feature, JWT/security hygiene, centralized error handling, JPA pitfalls, logging, REST conventions, the mandatory TDD (unit-only for now) |
 | `frontend-code-quality-reviewer`     | contracts-as-SSoT, feature-prefixed enums, RHF+Zod pattern, services/rules layering, routing guards, co-located tests                                |
 | `react-reviewer`                     | React 19: unnecessary effects, effect deps/cleanup, memory leaks, React Compiler friendliness, re-render/derived state, loading/empty/error states   |
 | `issue-coverage-reviewer`            | whether the diff satisfies the GitHub issue's scope/acceptance criteria                                                                              |

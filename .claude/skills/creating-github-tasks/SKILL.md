@@ -39,9 +39,10 @@ user is learning Java/Spring through this project.
    - `## Descrição` — the goal, in the user's own words.
    - `## Critérios de aceite` — bullets, only if the user gave any.
    - `## Testes (TDD)` — a reminder to write the failing test first,
-     naming the applicable layers for the area: backend is
-     unit → integration → E2E (see `backend/CLAUDE.md`), frontend is
-     unit → E2E (see `frontend/CLAUDE.md`). Only omit this section for a
+     naming the applicable layers for the area as currently scoped in
+     `backend/CLAUDE.md` / `frontend/CLAUDE.md` — right now unit only on
+     both sides (integration and E2E are deferred); behavior that can't
+     be unit-tested gets "validar manualmente". Only omit this section for a
      task with genuinely no code (pure docs/config) — say so explicitly
      rather than silently dropping it.
    - `## Documentação` — a reminder to update the relevant `README.md`
@@ -85,8 +86,8 @@ Keep it to 4-8 items, roughly ordered by when they'd first be needed.
 
 | Area     | Test layers to name           | Study path? |
 | -------- | ------------------------------ | ----------- |
-| backend  | unit → integration → E2E       | yes         |
-| frontend | unit → E2E                     | no          |
+| backend  | unit (integration/E2E deferred) | yes        |
+| frontend | unit (E2E deferred)             | no         |
 | general  | only if the task involves code | no          |
 
 ## Common mistakes

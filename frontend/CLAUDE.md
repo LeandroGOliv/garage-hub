@@ -9,8 +9,8 @@ commands, and conventions.
 feature-based structure and conventions below are the intended target
 this project will grow into, not what exists today — expect them to
 be refined once real features land. Some tooling referenced here
-(Vitest, Playwright) isn't installed yet; that's called out where
-relevant.
+(Vitest, Playwright) isn't installed yet — Playwright is deferred
+altogether; that's called out where relevant.
 
 ## Tech stack
 
@@ -34,8 +34,9 @@ pnpm lint      # eslint .
 pnpm preview   # preview the production build
 ```
 
-`pnpm test` (Vitest) and an E2E command (Playwright) aren't set up
-yet — add them alongside the test setup described below.
+`pnpm test` (Vitest) isn't set up yet — add it alongside the test
+setup described below. Playwright (E2E) is deferred, see the testing
+strategy.
 
 ## Environment variables
 
@@ -224,14 +225,18 @@ Import a feature's services only through that feature's `services/`
 folder or its `index.ts` barrel — never call `fetch` directly from a
 component.
 
-## Testing strategy (TDD, two layers)
+## Testing strategy (TDD, unit tests only for now)
 
 TDD is mandatory: write the failing test before the implementation.
+
+**Current scope: unit tests only.** E2E (Playwright, #7) is
+deliberately deferred to the "5 - Futuro" milestone so the project
+starts simple — don't ask for an E2E scenario or block on its absence
+until it comes back.
 
 1. **Unit** (Vitest — not yet installed) — co-located as
    `{feature}.test.ts` next to the file it covers, primarily testing
    `rules/` (pure logic) and hooks.
-2. **E2E** (Playwright — not yet installed) — drives the real app
+2. **E2E** (Playwright — deferred) — once back, drives the real app
    (this frontend against the real backend) through critical user
-   flows end to end, in a separate top-level `e2e/` directory once
-   added.
+   flows end to end, in a separate top-level `e2e/` directory.

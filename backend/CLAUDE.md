@@ -18,7 +18,7 @@ exists today.
 - **Spring RestClient** — outbound HTTP calls (if/when needed)
 - **PostgreSQL** — target database (not yet added as a Maven dependency)
 - **JUnit 5 + Mockito** — unit tests (`spring-boot-starter-*-test` starters)
-- **Testcontainers** — planned, for integration tests against a real Postgres (not yet a dependency)
+- **Testcontainers** — deferred (issue #10, milestone "5 - Futuro"), for integration tests against a real Postgres
 
 ## Essential commands
 
@@ -26,7 +26,7 @@ Run from `backend/`:
 
 ```bash
 ./mvnw spring-boot:run     # start the API (dev)
-./mvnw test                # run unit + integration tests
+./mvnw test                # run the unit tests
 ./mvnw clean package        # build the jar
 ```
 
@@ -107,17 +107,30 @@ issues an access token, protected endpoints read it from the
 or `SecurityConfig` exist yet — this is the target shape, not current
 state.
 
-## Testing strategy (TDD, three layers)
+## Testing strategy (TDD, unit tests only for now)
 
 TDD is mandatory: write the failing test before the implementation.
 Tests are co-located with the class they cover (`CarServiceTest.java`
 next to `CarService.java`).
 
-Three layers, each answering a different question:
+**Current scope: pure unit tests only.** Integration (Testcontainers,
+#10) and E2E (Playwright, #7) are deliberately deferred to the
+"5 - Futuro" milestone so the project starts simple. Until they come
+back:
+
+- Every new or changed class gets a **unit** test (JUnit 5 + Mockito)
+  — one class in isolation, dependencies mocked (e.g. `CarService`
+  with a mocked `CarRepository`). No Spring context (no
+  `@SpringBootTest`, no `@WebMvcTest`), no database.
+- Behavior that can only be proven with the Spring context or a real
+  database (datasource/profile config, Liquibase schema, ddl-auto,
+  OSIV, end-to-end 403s) is validated manually — don't ask for an
+  integration test for it, and don't block on its absence.
+
+The full target pyramid, for when #10 and #7 leave the backlog:
 
 1. **Unit** (JUnit 5 + Mockito) — one class in isolation, dependencies
-   mocked (e.g. `CarService` with a mocked `CarRepository`). No Spring
-   context, no database. Fast, the bulk of the suite.
+   mocked. No Spring context, no database. Fast, the bulk of the suite.
 2. **Integration** (`@SpringBootTest` + MockMvc + Testcontainers) —
    boots the real Spring context against a real Postgres in Docker.
    Verifies controller → service → repository → database wiring:

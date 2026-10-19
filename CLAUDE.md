@@ -35,10 +35,11 @@ their own `CLAUDE.md` — this file only covers what's shared.
 ## Development workflow
 
 **TDD is mandatory on both sides**, for every task: write the failing
-test first, then the implementation. Each side also carries its own
-E2E suite (Playwright) for full user-flow coverage on top of unit
-tests — see `backend/CLAUDE.md` and `frontend/CLAUDE.md` for how the
-test pyramid is split there.
+test first, then the implementation. For now that means **unit tests
+only** on both sides — integration (Testcontainers) and E2E
+(Playwright) are deferred to the "5 - Futuro" milestone. See
+`backend/CLAUDE.md` and `frontend/CLAUDE.md` for the current scope and
+the full pyramid it will grow back into.
 
 ### Branch naming
 
